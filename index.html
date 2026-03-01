@@ -72,15 +72,17 @@
       purple: '#FCF6DE',     // สี blob พื้นหลัง (กลาง)
       orange: '#E2CEF3',     // สีพื้น NEXT QUEUE section
       bg: '#f1eeff',         // ⭐ สีพื้นหลังทั้งเพจ
-      white: '#ffe8be',      // สีใช้แทน white ใน border บางจุด
+      white: '#ffffff',      // ✏️ สีใช้แทน white ใน border บางจุด (ปรับเป็นขาวให้เข้าธีม)
       textMain: '#9673D2',   // ⭐ สีหลักของข้อความและปุ่มหลัก (ม่วง)
       textSoft: '#A788DC',   // สีข้อความรอง
       pinkDeep: '#9673D2',   // สี accent เข้ม (ปุ่ม, badge)
       blueDeep: '#7D45C6',   // สี accent เข้ม (title, icon)
       purpleDeep: '#9673D2', // สี accent เข้ม (label, text)
       orangeDeep: '#A788DC', // สี accent เข้ม (NEXT QUEUE label)
-      cardBg: '#ffe8be',     // ⭐ สีพื้นหลังการ์ดงาน (todo/doing)
-      cardBgDone: '#fcd28d', // ⭐ สีพื้นหลังการ์ดงาน (done)
+      
+      // ✏️ ปรับสีพื้นหลังการ์ดงานให้เข้ากับธีม Lilac (ลบสีส้มออก)
+      cardBg: '#ffffff',     // ⭐ สีพื้นหลังการ์ดงาน (todo/doing) เป็นสีขาวคลีนๆ
+      cardBgDone: '#f4f0fc', // ⭐ สีพื้นหลังการ์ดงาน (done) เป็นสีม่วงอ่อนจางๆ
 
       // 🎨 [แก้ได้] สีการ์ดและ UI elements — เปลี่ยนที่นี่ที่เดียว!
       cardWhite: '#ffffff',       // ⭐ สีพื้นหลังการ์ดหลัก (Header, ProgressFlower, CompactStats)
@@ -156,17 +158,17 @@
           <div className="flex flex-col justify-center ml-2 relative z-10">
             <div className="flex items-center gap-1">
              <h1 className="text-2xl font-black italic tracking-tighter flex">
-  {/* ✏️ [แก้ได้] เปลี่ยนชื่อแอปที่นี่ */}
-  {"Nori Design".split('').map((char, index) => (
-    <span 
-      key={index} 
-      className={`bg-gradient-to-br from-[#9673D2] to-[#CCAAE6] bg-clip-text text-transparent drop-shadow-sm inline-block animate-text-wave pb-2 ${char === ' ' ? 'w-2.5' : 'pr-[1.5px]'}`} 
-      style={{ animationDelay: `${index * 0.1}s` }}
-    >
-      {char}
-    </span>
-  ))}
-</h1>
+              {/* ✏️ [แก้ได้] เปลี่ยนชื่อแอปที่นี่ */}
+              {"Nori Design".split('').map((char, index) => (
+                <span 
+                  key={index} 
+                  className={`bg-gradient-to-br from-[#9673D2] to-[#CCAAE6] bg-clip-text text-transparent drop-shadow-sm inline-block animate-text-wave pb-2 ${char === ' ' ? 'w-2.5' : 'pr-[1.5px]'}`} 
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  {char}
+                </span>
+              ))}
+            </h1>
               {/* ✏️ [แก้ได้] ปุ่ม Admin/Guest badge — ถ้าไม่ต้องการแสดงให้ลบ <button> นี้ออก */}
               {/* ✏️ [แก้ได้] สีพื้นหลัง badge — แก้ที่ COLORS.buttonBg */}
               <button onClick={() => isAdmin ? setIsAdmin(false) : setShowAuthModal(true)} className={`px-1.5 py-0.5 ml-1 rounded-full text-[7px] font-black uppercase tracking-widest border shadow-sm transition-all active:scale-95`} style={{ backgroundColor: isAdmin ? `${COLORS.buttonBg}99` : `${COLORS.buttonBg}cc`, color: isAdmin ? '#9673D2' : '#9ca3af', borderColor: isAdmin ? '#CCAAE6' : '#e5e7eb' }}>
@@ -334,12 +336,12 @@
     const TaskCard = React.memo(({ task, isAdmin, onEdit, onToggleDoing, onToggleStatus }) => (
       <div onClick={() => isAdmin && onEdit(task)} className={`relative mb-2 rounded-[22px] p-3 transition-all shadow-sm group backdrop-blur-sm ${isAdmin ? 'active:scale-[0.97] cursor-pointer' : ''}`} 
         style={{ 
-  backgroundColor: task.status === 'done' ? COLORS.cardBgDone : task.status === 'doing' ? COLORS.cardBg : COLORS.cardBg,
-  borderWidth: '1px',
-  borderStyle: 'solid',
-  borderColor: task.status === 'doing' ? COLORS.orangeDeep : (task.status === 'done' ? 'transparent' : COLORS.white), 
-  opacity: task.status === 'done' ? 0.7 : 1 
-}}
+          backgroundColor: task.status === 'done' ? COLORS.cardBgDone : task.status === 'doing' ? COLORS.cardBg : COLORS.cardBg,
+          borderWidth: '1px',
+          borderStyle: 'solid',
+          borderColor: task.status === 'doing' ? COLORS.orangeDeep : (task.status === 'done' ? 'transparent' : COLORS.white), 
+          opacity: task.status === 'done' ? 0.7 : 1 
+        }}
         >
         {task.status === 'doing' && (
            <div className="absolute inset-0 pointer-events-none z-0">
@@ -365,14 +367,14 @@
                 'bg-white/50 text-gray-400 border-gray-100'
               }`}>{task.channel}</span>
 
-              {/* ✏️ [เพิ่มใหม่] แสดงชื่อแอดมิน */}
+              {/* แสดงชื่อแอดมิน */}
               {task.adminName && <span className="text-[7px] px-1.5 py-0.5 rounded-md font-black uppercase border text-[#9673D2] bg-[#f4f0fc]/80 border-[#CCAAE6] ml-0.5">👤 {task.adminName}</span>}
               
               {/* ✏️ [แก้ได้] ข้อความ badge ด่วน — เปลี่ยน "🔥 ด่วน" เป็นอื่น */}
               {/* ✏️ [แก้ได้] สีพื้นหลัง badge ด่วน — แก้ที่ COLORS.buttonBg */}
               {task.priority === 'urgent' && <span className="text-[9px] font-bold animate-pulse px-2 py-0.5 rounded-full shadow-sm" style={{ color: COLORS.pinkDeep, backgroundColor: COLORS.buttonBg }}>{'\u{1F525}'} ด่วน</span>}
             </div>
-            <div className="flex items-center gap-1 text-[9px] font-black bg-[#f4f0fc]/80 px-2.5 py-0.5 rounded-lg border border-[#CCAAE6] shadow-sm ml-2" style={{ color: COLORS.pinkDeep }}>
+            <div className="flex items-center gap-1 text-[9px] font-black bg-[#f4f0fc]/80 px-2.5 py-0.5 rounded-lg border border-[#CCAAE6] shadow-sm ml-2 whitespace-nowrap" style={{ color: COLORS.pinkDeep }}>
                 <IconCalendar size={11} style={{ color: COLORS.pinkDeep }} />
                 {new Date(task.deadline).toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: '2-digit' })}
             </div>
@@ -473,7 +475,7 @@
                     <span className="text-[13px] z-10 leading-none">{day}</span>
                     {/* จุดแดงบนวันที่มีงาน */}
                     {hasTasks && (
-                      <div className="absolute bottom-1 w-1.5 h-1.5 rounded-full" style={{ backgroundColor: isSelected ? COLORS.white : COLORS.pinkDeep }}></div> 
+                      <div className="absolute bottom-1 w-1.5 h-1.5 rounded-full" style={{ backgroundColor: isSelected ? COLORS.pinkDeep : COLORS.pinkDeep }}></div> 
                     )}
                   </div>
                 </div>
@@ -496,6 +498,9 @@
 
       // ✏️ [แก้ได้] ช่องทาง default (ถ้า Google Sheets ยังไม่มีข้อมูล)
       const [channels, setChannels] = useState(['LINE', 'FB', 'IG']); 
+      
+      // รายชื่อแอดมิน (ถ้า Google Sheets ยังไม่มีข้อมูล)
+      const [adminList, setAdminList] = useState([]); 
       
       // ===== STATE: UI Loading =====
       const [isLoading, setIsLoading] = useState(true);
@@ -522,7 +527,7 @@
       const [searchQuery, setSearchQuery] = useState('');
       const [filterType, setFilterType] = useState('all');
       
-      // ✏️ [เพิ่มใหม่] State สำหรับตัวกรองแอดมิน
+      // ตัวกรองแอดมิน
       const [filterAdmin, setFilterAdmin] = useState('all');
       
       // ===== STATE: Admin & Auth =====
@@ -546,7 +551,7 @@
       // 🌐 API: ลิงก์ Google Apps Script Web App
       // ==========================================
       // ✏️ [แก้ได้] เปลี่ยน URL ตรงนี้เมื่อ Deploy Google Apps Script ใหม่
-      const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxI1Hur2Len4dP0KB8BoVE4YC1yLmzATzDMeusdKR04GAw8W1Nalfasyy5OmvsCQDv0-w/exec";
+      const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx-2OX7kdX_I1nOQnR0ufdt9Z_rfcqXBhTIUoBMhLq8QqWhKT55Z7gfVhgs0V-TB79q/exec";
 
       // ฟังก์ชันเรียก API (POST) — ไม่ต้องแก้
       const fetchAPI = async (payload) => {
@@ -577,6 +582,8 @@
               setTasks(response.data.tasks || []);
               if (response.data.taskTypes && response.data.taskTypes.length > 0) setTaskTypes(response.data.taskTypes);
               if (response.data.channels && response.data.channels.length > 0) setChannels(response.data.channels);
+              // รับค่ารายชื่อแอดมินมาบันทึกในระบบ
+              if (response.data.adminList && response.data.adminList.length > 0) setAdminList(response.data.adminList); 
               if (response.data.profileImage) setProfileImage(response.data.profileImage);
               if (response.data.bannerImage) setBannerImage(response.data.bannerImage);
               if (response.data.bannerVisible !== undefined) setIsBannerVisible(response.data.bannerVisible);
@@ -649,7 +656,7 @@
       // จำนวนงานที่ยังไม่เสร็จทั้งหมด
       const waitingCount = useMemo(() => tasks.filter(t => t.status !== 'done').length, [tasks]);
 
-      // ✏️ [เพิ่มใหม่] รายชื่อแอดมินที่ไม่ซ้ำกัน (สำหรับตัวเลือกในตัวกรอง)
+      // รายชื่อแอดมินที่ไม่ซ้ำกัน (สำหรับตัวเลือกในตัวกรอง)
       const uniqueAdmins = useMemo(() => {
         const admins = tasks.map(t => t.adminName).filter(Boolean);
         return ['all', ...new Set(admins)];
@@ -709,7 +716,7 @@
           client: formData.get('client'),
           type: formData.get('type'), 
           channel: formData.get('channel'),
-          adminName: formData.get('adminName'), // ✏️ [เพิ่มใหม่] บันทึกชื่อแอดมิน
+          adminName: formData.get('adminName'), // บันทึกชื่อแอดมิน
           priority: formData.get('priority') ? 'urgent' : 'normal', 
           deadline: formData.get('deadline'),
           details: formData.get('details'),
@@ -755,10 +762,10 @@
       const filteredAllTasks = useMemo(() => tasks.filter(t => {
         const matchSearch = t.type.toLowerCase().includes(searchQuery.toLowerCase()) || t.client.toLowerCase().includes(searchQuery.toLowerCase());
         const matchFilter = filterType === 'all' || (filterType === 'pending' && t.status !== 'done') || (filterType === 'done' && t.status === 'done');
-        // ✏️ [เพิ่มใหม่] เงื่อนไขการกรองชื่อแอดมิน
+        // เงื่อนไขการกรองชื่อแอดมิน
         const matchAdmin = filterAdmin === 'all' || t.adminName === filterAdmin; 
         return matchSearch && matchFilter && matchAdmin;
-      }), [tasks, searchQuery, filterType, filterAdmin]); // ✏️ [เพิ่มใหม่] เพิ่ม filterAdmin เข้าใน dependencies
+      }), [tasks, searchQuery, filterType, filterAdmin]); 
 
       const displayedTasks = isCalendarView 
         ? filteredAllTasks.filter(t => t.deadline === selectedDate) 
@@ -875,21 +882,6 @@
                     <div className="absolute left-4 top-1/2 -translate-y-1/2 opacity-50" style={{ color: COLORS.blueDeep }}><IconSearch size={16} /></div>
                     <input type="text" placeholder="ค้นหาคิวงาน..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full rounded-[22px] py-3 pl-10 pr-4 outline-none text-xs shadow-lg shadow-[#9673D2]/10 transition-all backdrop-blur-sm" style={{ backgroundColor: `${COLORS.searchInputBg}cc`, borderWidth: '2px', borderColor: COLORS.blue }} />
                   </div>
-
-                  {/* ✏️ [เพิ่มใหม่] ตัวกรองแอดมิน */}
-                  <div className="mb-3">
-                    <select
-                      value={filterAdmin}
-                      onChange={(e) => setFilterAdmin(e.target.value)}
-                      className="w-full p-3.5 rounded-2xl outline-none text-[10px] font-black shadow-sm transition-all text-[#9673D2] appearance-none cursor-pointer text-center"
-                      style={{ backgroundColor: `${COLORS.filterBarBg}cc`, borderWidth: '2px', borderColor: COLORS.blue }}
-                    >
-                      <option value="all">แอดมินทั้งหมด 👤</option>
-                      {uniqueAdmins.filter(a => a !== 'all').map(admin => (
-                        <option key={admin} value={admin}>แอดมิน: {admin}</option>
-                      ))}
-                    </select>
-                  </div>
                   
                   {/* ✏️ [แก้ได้] ข้อความปุ่ม filter: "ทั้งหมด", "ยังไม่ได้เริ่ม", "เสร็จแล้ว" */}
                   {/* ✏️ [แก้ได้] สีพื้นหลังแถบ filter — แก้ที่ COLORS.filterBarBg, COLORS.cardBorder */}
@@ -899,9 +891,28 @@
                       <button onClick={() => setFilterType('done')} className={`flex-1 text-[9px] font-black py-2 rounded-full transition-all tracking-wider ${filterType === 'done' ? 'shadow-sm' : 'text-gray-400'}`} style={{ color: filterType === 'done' ? COLORS.blueDeep : '', backgroundColor: filterType === 'done' ? COLORS.buttonBg : 'transparent' }}>เสร็จแล้ว</button>
                   </div>
 
-                  {/* ✏️ [แก้ได้] ข้อความปุ่มสลับ calendar/list */}
-                  {/* ✏️ [แก้ได้] สีพื้นหลังปุ่มสลับ — แก้ที่ COLORS.buttonBg, COLORS.cardBorder */}
-                  <div className="flex justify-end mb-4 pr-1">
+                  {/* ✏️ จัดวางตัวกรองแอดมิน และ ปุ่มสลับ calendar/list ให้อยู่คู่กัน */}
+                  <div className="flex items-center justify-between mb-4 px-1">
+                    {/* ตัวกรองแอดมิน (ย่อขนาด) */}
+                    <div className="relative w-[130px]">
+                      <select
+                        value={filterAdmin}
+                        onChange={(e) => setFilterAdmin(e.target.value)}
+                        className="w-full py-1.5 pl-3 pr-6 rounded-full outline-none text-[9px] font-black shadow-[0_4px_10px_rgba(226,206,243,0.5)] transition-all text-[#9673D2] appearance-none cursor-pointer backdrop-blur-md"
+                        style={{ backgroundColor: `${COLORS.buttonBg}cc`, borderWidth: '2px', borderColor: COLORS.cardBorder }}
+                      >
+                        <option value="all">👤 แอดมินทุกคน</option>
+                        {uniqueAdmins.filter(a => a !== 'all').map(admin => (
+                          <option key={admin} value={admin}>👤 {admin}</option>
+                        ))}
+                      </select>
+                      {/* ลูกศร Dropdown เล็กๆ */}
+                      <div className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-[#A788DC]">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                      </div>
+                    </div>
+
+                    {/* ปุ่มสลับ calendar/list */}
                     <button onClick={() => { 
                       const newView = !isCalendarView;
                       setIsCalendarView(newView); 
@@ -1000,10 +1011,13 @@
                         <datalist id="channelsList">
                           {channels.map(ch => <option key={ch} value={ch} />)}
                         </datalist>
-                     </div>
 
-                     {/* ✏️ [เพิ่มใหม่] ช่องเพิ่มชื่อแอดมิน */}
-                     <input name="adminName" defaultValue={editingTask?.adminName || ''} className="w-full p-3.5 rounded-2xl border border-gray-100 outline-none text-[11px] font-black text-[#9673D2] shadow-sm focus:border-[#f4f0fc] transition-all" style={{ backgroundColor: COLORS.cardInner }} placeholder="👤 ชื่อแอดมิน" />
+                        {/* ✨ [แก้ใหม่] datalist แอดมิน — option มาจาก adminList state */}
+                        <input list="adminNamesList" name="adminName" defaultValue={editingTask?.adminName || ''} className="w-full p-3.5 rounded-2xl border border-gray-100 outline-none text-[11px] font-black text-[#9673D2] shadow-sm focus:border-[#f4f0fc] transition-all" style={{ backgroundColor: COLORS.cardInner }} placeholder="👤 ชื่อแอดมิน" />
+                        <datalist id="adminNamesList">
+                          {adminList.map(a => <option key={a} value={a} />)}
+                        </datalist>
+                     </div>
 
                      {/* ✏️ [แก้ได้] placeholder textarea รายละเอียด */}
                      <textarea name="details" rows="2" defaultValue={editingTask?.details || ''} className="w-full p-3.5 rounded-2xl border border-gray-100 outline-none text-[11px] shadow-sm focus:border-[#f4f0fc] transition-all resize-none" style={{ backgroundColor: COLORS.cardInner }} placeholder="รายละเอียดเพิ่มเติม (ถ้ามี)..."></textarea>
@@ -1191,5 +1205,4 @@
     root.render(<App />);
   </script>
 </body>
-
 </html>
