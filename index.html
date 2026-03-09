@@ -283,8 +283,8 @@
                 'bg-white/50 text-gray-400 border-gray-100'
               }`}>{task.channel}</span>
 
-              {task.adminName && <span className="text-[7px] px-1.5 py-0.5 rounded-md font-black uppercase border text-[#8c465d] bg-[#fcedf0]/80 border-[#fcdfe5] ml-0.5">👤 {task.adminName}</span>}
               {task.zone && <span className="text-[7px] px-1.5 py-0.5 rounded-md font-black uppercase border text-[#b3788b] bg-white border-gray-100 ml-0.5">📍 {task.zone}</span>}
+              {task.adminName && <span className="text-[7px] px-1.5 py-0.5 rounded-md font-black uppercase border text-[#8c465d] bg-[#fcedf0]/80 border-[#fcdfe5] ml-0.5">👤 {task.adminName}</span>}
               {task.priority === 'urgent' && <span className="text-[9px] font-bold animate-pulse px-2 py-0.5 rounded-full shadow-sm" style={{ color: COLORS.pinkDeep, backgroundColor: COLORS.buttonBg }}>{'\u{1F525}'} ด่วน</span>}
             </div>
             <div className="flex items-center gap-1 text-[9px] font-black bg-[#fcedf0]/80 px-2.5 py-0.5 rounded-lg border border-[#fcdfe5] shadow-sm ml-2 whitespace-nowrap" style={{ color: COLORS.pinkDeep }}>
@@ -728,8 +728,29 @@
                       <button onClick={() => setFilterType('done')} className={`flex-1 text-[9px] font-black py-2 rounded-full transition-all tracking-wider ${filterType === 'done' ? 'shadow-sm' : 'text-gray-400'}`} style={{ color: filterType === 'done' ? COLORS.blueDeep : '', backgroundColor: filterType === 'done' ? COLORS.buttonBg : 'transparent' }}>เสร็จแล้ว</button>
                   </div>
 
+                  {/* สลับตัวกรอง โซน (มาซ้าย) และ แอดมิน (ไปขวา) */}
                   <div className="flex flex-wrap items-center justify-between mb-4 px-1 gap-1">
                     <div className="flex gap-1.5 flex-1 min-w-0">
+                      
+                      {/* ตัวกรองโซน */}
+                      <div className="relative w-[100px]">
+                        <select
+                          value={filterZone}
+                          onChange={(e) => setFilterZone(e.target.value)}
+                          className="w-full py-1.5 pl-3 pr-6 rounded-full outline-none text-[9px] font-black shadow-[0_4px_10px_rgba(252,223,229,0.5)] transition-all text-[#8c465d] appearance-none cursor-pointer backdrop-blur-md truncate"
+                          style={{ backgroundColor: `${COLORS.buttonBg}cc`, borderWidth: '2px', borderColor: COLORS.cardBorder }}
+                        >
+                          <option value="all">📍 ทุกโซน</option>
+                          {uniqueZones.filter(z => z !== 'all').map(zone => (
+                            <option key={zone} value={zone}>📍 {zone}</option>
+                          ))}
+                        </select>
+                        <div className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-[#b3788b]">
+                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                      </div>
+
+                      {/* ตัวกรองแอดมิน */}
                       <div className="relative w-[110px]">
                         <select
                           value={filterAdmin}
@@ -747,22 +768,6 @@
                         </div>
                       </div>
 
-                      <div className="relative w-[100px]">
-                        <select
-                          value={filterZone}
-                          onChange={(e) => setFilterZone(e.target.value)}
-                          className="w-full py-1.5 pl-3 pr-6 rounded-full outline-none text-[9px] font-black shadow-[0_4px_10px_rgba(252,223,229,0.5)] transition-all text-[#8c465d] appearance-none cursor-pointer backdrop-blur-md truncate"
-                          style={{ backgroundColor: `${COLORS.buttonBg}cc`, borderWidth: '2px', borderColor: COLORS.cardBorder }}
-                        >
-                          <option value="all">📍 ทุกโซน</option>
-                          {uniqueZones.filter(z => z !== 'all').map(zone => (
-                            <option key={zone} value={zone}>📍 {zone}</option>
-                          ))}
-                        </select>
-                        <div className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-[#b3788b]">
-                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                        </div>
-                      </div>
                     </div>
 
                     <button onClick={() => { 
@@ -843,14 +848,8 @@
                           {channels.map(ch => <option key={ch} value={ch} />)}
                         </datalist>
 
+                        {/* สลับช่องกรอก โซน (มาซ้าย) และ แอดมิน (ไปขวา) */}
                         <div className="flex gap-2">
-                          <div className="flex-1">
-                            <input list="adminNamesList" name="adminName" defaultValue={editingTask?.adminName || ''} className="w-full p-3.5 rounded-2xl border border-gray-100 outline-none text-[11px] font-black text-[#8c465d] shadow-sm focus:border-[#fcedf0] transition-all" style={{ backgroundColor: COLORS.cardInner }} placeholder="👤 แอดมิน" />
-                            <datalist id="adminNamesList">
-                              {adminList.map(a => <option key={a} value={a} />)}
-                            </datalist>
-                          </div>
-                          
                           <div className="flex-1">
                             <input list="zonesList" name="zone" defaultValue={editingTask?.zone || ''} className="w-full p-3.5 rounded-2xl border border-gray-100 outline-none text-[11px] font-black text-[#b3788b] shadow-sm focus:border-[#fcedf0] transition-all" style={{ backgroundColor: COLORS.cardInner }} placeholder="📍 โซนงาน" />
                             <datalist id="zonesList">
@@ -858,7 +857,15 @@
                               {zoneList.map(z => <option key={z} value={z} />)}
                             </datalist>
                           </div>
+                          
+                          <div className="flex-1">
+                            <input list="adminNamesList" name="adminName" defaultValue={editingTask?.adminName || ''} className="w-full p-3.5 rounded-2xl border border-gray-100 outline-none text-[11px] font-black text-[#8c465d] shadow-sm focus:border-[#fcedf0] transition-all" style={{ backgroundColor: COLORS.cardInner }} placeholder="👤 แอดมิน" />
+                            <datalist id="adminNamesList">
+                              {adminList.map(a => <option key={a} value={a} />)}
+                            </datalist>
+                          </div>
                         </div>
+
                      </div>
 
                      <textarea name="details" rows="2" defaultValue={editingTask?.details || ''} className="w-full p-3.5 rounded-2xl border border-gray-100 outline-none text-[11px] shadow-sm focus:border-[#fcedf0] transition-all resize-none" style={{ backgroundColor: COLORS.cardInner }} placeholder="รายละเอียดเพิ่มเติม (ถ้ามี)..."></textarea>
@@ -908,7 +915,7 @@
                         let finalUrl = tempImageUrl;
                         const match = finalUrl.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || finalUrl.match(/id=([a-zA-Z0-9_-]+)/) || finalUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
                         if (match && match[1]) {
-                            finalUrl = `https://drive.google.com/uc?id=${match[1]}`;
+                            finalUrl = `https://lh3.googleusercontent.com/d/${match[1]}`;
                         }
                         setProfileImage(finalUrl); 
                         fetchAPI({ action: 'saveProfileImage', imageUrl: finalUrl });
@@ -934,7 +941,7 @@
                         let finalUrl = tempBannerUrl;
                         const match = finalUrl.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || finalUrl.match(/id=([a-zA-Z0-9_-]+)/) || finalUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
                         if (match && match[1]) {
-                            finalUrl = `https://drive.google.com/uc?id=${match[1]}`;
+                            finalUrl = `https://lh3.googleusercontent.com/d/${match[1]}`;
                         }
                         setBannerImage(finalUrl); 
                         toggleBannerVisibility(true);
